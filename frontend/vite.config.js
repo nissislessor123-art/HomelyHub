@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8095',
+        target:"https://homelyhub-property-booking-platform.onrender.com",
         changeOrigin: true,
         secure: false,
       },
