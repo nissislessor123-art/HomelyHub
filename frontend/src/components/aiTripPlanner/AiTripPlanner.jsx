@@ -100,6 +100,7 @@ const AiTripPlanner = () => {
       });
 
       setResult(data);
+     
 
       toast.success("Your trip plan is ready");
 
@@ -671,6 +672,145 @@ const AiTripPlanner = () => {
               </div>
 
             </div>
+            {/* LIVE LOCAL DISCOVERIES - SERPAPI */}
+{result.livePlaces?.length > 0 && (
+  <div className="mt-10">
+
+    <div className="mb-5">
+      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#73a3a5]">
+        Live local discovery
+      </p>
+
+      <h3 className="mt-1 text-2xl font-extrabold tracking-[-0.035em]">
+        Places worth exploring.
+      </h3>
+
+      <p className="mt-2 text-sm text-[#71878d]">
+        Real-time local results found using SerpApi and matched to your trip.
+      </p>
+    </div>
+
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+      {result.livePlaces.map((place, index) => (
+        <article
+  key={index}
+  className="group overflow-hidden rounded-[24px] border border-[#dfe8e7] bg-white shadow-[0_10px_35px_rgba(25,51,60,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(25,51,60,0.10)]"
+>
+  {/* IMAGE */}
+  <div className="relative h-48 overflow-hidden bg-[#dfe9e9]">
+    {place.thumbnail ? (
+      <img
+        src={place.thumbnail}
+        alt={place.name}
+        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+      />
+    ) : (
+      <div className="flex h-full items-center justify-center">
+  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/80 text-3xl font-black text-[#087c7a] shadow-sm">
+    {place.name?.charAt(0)?.toUpperCase()}
+  </div>
+</div>
+    )}
+
+    {/* LIVE BADGE */}
+    <div className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#087c7a] shadow-sm">
+      Live discovery
+    </div>
+
+    {/* RATING */}
+    {place.rating && (
+      <div className="absolute bottom-3 right-3 rounded-full bg-white px-3 py-1.5 text-xs font-extrabold text-[#19333c] shadow-sm">
+        ★ {place.rating}
+      </div>
+    )}
+  </div>
+
+  {/* CONTENT */}
+  <div className="p-5">
+
+    {/* TYPE */}
+    {place.type && (
+      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#359c99]">
+        {place.type}
+      </p>
+    )}
+
+    {/* NAME */}
+    <h4 className="mt-1 text-lg font-extrabold leading-tight tracking-[-0.02em] text-[#19333c]">
+      {place.name}
+    </h4>
+
+    {/* ADDRESS */}
+    {place.address && (
+      <p className="mt-3 flex items-start gap-2 text-xs leading-5 text-[#71878d]">
+        <MapPin
+          size={14}
+          className="mt-0.5 shrink-0 text-[#0abab5]"
+        />
+        <span>{place.address}</span>
+      </p>
+    )}
+
+    {/* RATING + REVIEWS */}
+    <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-semibold text-[#587078]">
+      {place.rating && (
+        <span className="rounded-full bg-[#e4f7f5] px-2.5 py-1 text-[#087c7a]">
+          ★ {place.rating}
+        </span>
+      )}
+
+      {place.reviews && (
+        <span>
+          {place.reviews.toLocaleString()} reviews
+        </span>
+      )}
+
+      {place.openState && (
+        <span className="text-[#087c7a]">
+          · {place.openState}
+        </span>
+      )}
+    </div>
+
+    {/* DESCRIPTION */}
+    {place.description && (
+      <p className="mt-4 line-clamp-2 text-sm leading-6 text-[#71878d]">
+        {place.description}
+      </p>
+    )}
+
+    {/* FOOTER */}
+    <div className="mt-5 flex items-center justify-between border-t border-[#edf1f1] pt-4">
+
+      <span className="text-[11px] font-semibold text-[#91a3a7]">
+        Found via Google Maps
+      </span>
+
+    <a
+  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${place.name} ${place.address || ""}`
+  )}`}
+  target="_blank"
+  rel="noreferrer"
+  className="text-xs font-extrabold text-[#087c7a] transition hover:text-[#a0bab5]"
+>
+  View on Maps →
+</a>
+    </div>
+  </div>
+</article>
+      ))}
+
+    </div>
+
+    <p className="mt-4 text-xs text-[#8da0a4]">
+      Live results powered by SerpApi.
+    </p>
+
+  </div>
+)}
+            
 
             {/* TIPS */}
             {result.plan.tips &&
