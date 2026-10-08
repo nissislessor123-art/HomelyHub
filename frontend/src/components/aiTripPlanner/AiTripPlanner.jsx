@@ -699,9 +699,9 @@ const AiTripPlanner = () => {
 >
   {/* IMAGE */}
   <div className="relative h-48 overflow-hidden bg-[#dfe9e9]">
-    {place.thumbnail ? (
+   {place.thumbnail ? (
       <img
-        src={place.thumbnail}
+       src={`/api/v1/rent/trip/image?url=${encodeURIComponent(place.thumbnail)}`}
         alt={place.name}
         className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
       />

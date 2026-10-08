@@ -61,6 +61,7 @@ const searchPlacesWithSerpApi = async (trip) => {
   
 
     const places = response.data.local_results || [];
+    
 
     
 
@@ -72,7 +73,7 @@ return places.slice(0, 15).map((place) => ({
   type: place.type,
   price: place.price,
   description: place.description,
-  thumbnail: place.thumbnail,
+ thumbnail: place.serpapi_thumbnail,
   openState: place.open_state,
   hours: place.hours,
   website: place.website,
